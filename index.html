@@ -1,1 +1,707 @@
-<!DOCTYPE html| <html lang="en"| <head| <meta charset="UTF-8"| <meta name="viewport" content="width=device-width, initial-scale=1.0"| <meta name="description" content="AIMRELAX-PUBG — PUBG Mobile Esports Clan"| <title>AIMRELAX-PUBG | Official Clan</title| <style|  { margin: 0; padding: 0; box-sizing: border-box; } html { scroll-behavior: smooth; } body { font-family: Arial, Helvetica, sans-serif; background: #080808; color: #fff; line-height: 1.6; } / NAVBAR */ nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(5,5,5,.94); border-bottom: 1px solid #292929; backdrop-filter: blur(10px); } .nav-container { max-width: 1200px; margin: auto; padding: 16px 25px; display: flex; justify-content: space-between; align-items: center; } .logo { font-size: 22px; font-weight: 900; letter-spacing: 2px; } .logo span { color: #ffb000; } .nav-links { display: flex; gap: 25px; list-style: none; } .nav-links a { color: #ddd; text-decoration: none; font-size: 13px; font-weight: bo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AIMRELAX-PUBG | Official Clan</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#070707;
+    color:#fff;
+}
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+    background:rgba(0,0,0,.92);
+    border-bottom:1px solid #242424;
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:2px;
+    color:#ff7a00;
+}
+
+.logo span{
+    color:#fff;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:22px;
+    font-size:14px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#ff7a00;
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:100px 20px 60px;
+    background:
+    radial-gradient(circle at center,#301500 0%,#100900 30%,#070707 65%);
+    position:relative;
+    overflow:hidden;
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border:1px solid rgba(255,122,0,.15);
+    border-radius:50%;
+    animation:pulse 4s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(.8);opacity:.3}
+    50%{transform:scale(1.2);opacity:.7}
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    border:1px solid #ff7a00;
+    color:#ff7a00;
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:clamp(45px,10vw,100px);
+    font-weight:1000;
+    letter-spacing:5px;
+    line-height:1;
+    text-shadow:0 0 30px rgba(255,122,0,.35);
+}
+
+.hero h1 span{
+    color:#ff7a00;
+}
+
+.hero p{
+    margin:25px auto;
+    max-width:650px;
+    color:#aaa;
+    font-size:18px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:14px 28px;
+    border-radius:5px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:#ff7a00;
+    color:#000;
+}
+
+.btn-primary:hover{
+    background:#fff;
+    transform:translateY(-3px);
+}
+
+.btn-secondary{
+    border:1px solid #555;
+    color:#fff;
+}
+
+.btn-secondary:hover{
+    border-color:#ff7a00;
+    color:#ff7a00;
+}
+
+/* SECTIONS */
+
+section{
+    padding:90px 20px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.section-title small{
+    color:#ff7a00;
+    letter-spacing:3px;
+    font-weight:bold;
+}
+
+.section-title h2{
+    font-size:40px;
+    margin-top:10px;
+}
+
+/* ABOUT */
+
+.about{
+    background:#0b0b0b;
+}
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+.card{
+    background:#111;
+    border:1px solid #242424;
+    border-radius:10px;
+    padding:30px;
+    transition:.3s;
+}
+
+.card:hover{
+    border-color:#ff7a00;
+    transform:translateY(-5px);
+}
+
+.card h3{
+    color:#ff7a00;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#aaa;
+    line-height:1.7;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:40px;
+}
+
+.stat{
+    text-align:center;
+    background:#0e0e0e;
+    border:1px solid #222;
+    padding:25px 10px;
+    border-radius:8px;
+}
+
+.stat strong{
+    display:block;
+    font-size:32px;
+    color:#ff7a00;
+}
+
+.stat span{
+    color:#888;
+    font-size:13px;
+}
+
+/* PLAYERS */
+
+.players{
+    background:#080808;
+}
+
+.players-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+  .player{
+    background:#111;
+    border:1px solid #222;
+    border-radius:10px;
+    padding:35px 20px;
+    text-align:center;
+    transition:.3s;
+}
+
+.player:hover{
+    border-color:#ff7a00;
+    transform:translateY(-6px);
+}
+
+.player-avatar{
+    width:90px;
+    height:90px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    border:2px solid #ff7a00;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    background:#181818;
+}
+
+.player h3{
+    margin-bottom:8px;
+}
+
+.player p{
+    color:#888;
+    font-size:13px;
+}
+
+/* COMING */
+
+.coming{
+    color:#777;
+    text-align:center;
+    padding:40px;
+    border:1px dashed #333;
+    border-radius:10px;
+}
+
+/* ACHIEVEMENTS */
+
+.achievements{
+    background:#0b0b0b;
+}
+
+.achievement-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.achievement{
+    padding:35px;
+    background:#111;
+    border:1px solid #242424;
+    border-radius:10px;
+    text-align:center;
+}
+
+.achievement .icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.achievement h3{
+    margin-bottom:10px;
+}
+
+.achievement p{
+    color:#777;
+}
+
+/* GALLERY */
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.gallery-item{
+    height:200px;
+    background:linear-gradient(135deg,#171717,#0b0b0b);
+    border:1px solid #252525;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#555;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.gallery-item:hover{
+    border-color:#ff7a00;
+    color:#ff7a00;
+}
+
+/* CONTACT */
+
+.contact{
+    background:#0b0b0b;
+    text-align:center;
+}
+
+.socials{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:30px;
+}
+
+.social{
+    padding:14px 25px;
+    border:1px solid #333;
+    border-radius:5px;
+    color:#fff;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.social:hover{
+    border-color:#ff7a00;
+    color:#ff7a00;
+}
+
+/* FOOTER */
+
+footer{
+    background:#050505;
+    border-top:1px solid #202020;
+    text-align:center;
+    padding:30px 20px;
+    color:#666;
+    font-size:13px;
+}
+
+footer strong{
+    color:#ff7a00;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    nav{
+        display:none;
+    }
+
+    .nav{
+        justify-content:center;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .players-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .achievement-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .hero h1{
+        letter-spacing:2px;
+    }
+}
+
+@media(max-width:480px){
+
+    .players-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    section{
+        padding:70px 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+
+<div class="logo">
+AIM<span>RELAX</span>-PUBG
+</div>
+
+<nav>
+<a href="#home">HOME</a>
+<a href="#clan">CLAN</a>
+<a href="#players">PLAYERS</a>
+<a href="#achievements">ACHIEVEMENTS</a>
+<a href="#gallery">GALLERY</a>
+<a href="#contact">CONTACT</a>
+</nav>
+
+</div>
+</header>
+
+
+<!-- HOME -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="badge">PUBG MOBILE CLAN</div>
+
+<h1>AIM<span>RELAX</span></h1>
+
+<p>
+PLAY • DOMINATE • REPEAT
+<br>
+Welcome to the official AIMRELAX-PUBG clan.
+</p>
+
+<div class="buttons">
+<a href="#players" class="btn btn-primary">OUR PLAYERS</a>
+<a href="#contact" class="btn btn-secondary">JOIN CLAN</a>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CLAN -->
+
+<section class="about" id="clan">
+
+<div class="container">
+
+<div class="section-title">
+<small>WHO WE ARE</small>
+<h2>ABOUT THE CLAN</h2>
+</div>
+
+<div class="about-grid">
+
+<div class="card">
+<h3>🎮 AIMRELAX-PUBG</h3>
+<p>
+A competitive PUBG Mobile clan built for players who love teamwork,
+competition and improving their skills.
+</p>
+</div>
+  <div class="card">
+<h3>🔥 OUR MISSION</h3>
+<p>
+Build a strong team, participate in tournaments and create a community
+of skilled PUBG Mobile players.
+</p>
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>2026</strong>
+<span>FOUNDED</span>
+</div>
+
+<div class="stat">
+<strong>0</strong>
+<span>PLAYERS</span>
+</div>
+
+<div class="stat">
+<strong>0</strong>
+<span>TOURNAMENTS</span>
+</div>
+
+<div class="stat">
+<strong>ARM</strong>
+<span>REGION</span>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- PLAYERS -->
+
+<section class="players" id="players">
+
+<div class="container">
+
+<div class="section-title">
+<small>OUR SQUAD</small>
+<h2>PLAYERS</h2>
+</div>
+
+<div class="coming">
+👤 PLAYER ROSTER COMING SOON
+<br><br>
+Your players will appear here.
+</div>
+
+</div>
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+
+<section class="achievements" id="achievements">
+
+<div class="container">
+
+<div class="section-title">
+<small>OUR JOURNEY</small>
+<h2>ACHIEVEMENTS</h2>
+</div>
+
+<div class="achievement-grid">
+
+<div class="achievement">
+<div class="icon">🏆</div>
+<h3>TOURNAMENTS</h3>
+<p>Coming Soon</p>
+</div>
+
+<div class="achievement">
+<div class="icon">🥇</div>
+<h3>VICTORIES</h3>
+<p>Coming Soon</p>
+</div>
+
+<div class="achievement">
+<div class="icon">🔥</div>
+<h3>TOP FRAGGER</h3>
+<p>Coming Soon</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+<div class="container">
+
+<div class="section-title">
+<small>MEDIA</small>
+<h2>GALLERY</h2>
+</div>
+
+<div class="gallery-grid">
+
+<div class="gallery-item">YOUR IMAGE</div>
+<div class="gallery-item">YOUR IMAGE</div>
+<div class="gallery-item">YOUR IMAGE</div>
+<div class="gallery-item">YOUR IMAGE</div>
+<div class="gallery-item">YOUR IMAGE</div>
+<div class="gallery-item">YOUR IMAGE</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+
+<div class="container">
+
+<div class="section-title">
+<small>GET IN TOUCH</small>
+<h2>JOIN AIMRELAX</h2>
+</div>
+
+<p style="color:#888;">
+Social media and clan contact links will be added soon.
+</p>
+
+<div class="socials">
+
+<a href="#" class="social">DISCORD</a>
+<a href="#" class="social">TELEGRAM</a>
+<a href="#" class="social">INSTAGRAM</a>
+<a href="#" class="social">TIKTOK</a>
+<a href="#" class="social">YOUTUBE</a>
+
+</div>
+
+</div>
+</section>
+
+
+<footer>
+
+© 2026 <strong>AIMRELAX-PUBG</strong> — All Rights Reserved.
+
+</footer>
+
+</body>
+</html>
+  
