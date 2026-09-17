@@ -418,11 +418,6 @@ footer{
 footer strong{
     color:#ff7a00;
 }
-     form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-     }
 
 /* MOBILE */
 
@@ -691,23 +686,91 @@ AIM<span>RELAX</span>-PUBG
 <a href="https://www.tiktok.com/@aimoppolc" class="social">TIKTOK</a>
 
 </div>
-    <form
-  action="https://formspree.io/f/xzezboby"
-  method="POST"
->
-  <label>
-    Your nickname:
-    <input type="text" name="nickname" placeholder="PUBG Nickname" required>
-    Your email:
-    <input type="email" name="email"placeholder="E-mail" required>
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
+<form id="contact-form" action="https://formspree.io/f/xzezboby" method="POST">
+
+<input type="text" name="nickname" placeholder="PUBG Nickname" required>
+
+<input type="email" name="email" placeholder="Your Email" required>
+
+<textarea name="message" placeholder="Your Message" required></textarea>
+
+<button type="submit">SEND MESSAGE</button>
+
+<p id="form-status"></p>
+
 </form>
+
+<style>
+#contact-form{
+max-width:600px;
+margin:30px auto;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+#contact-form input,
+#contact-form textarea{
+width:100%;
+padding:15px;
+background:#121212;
+border:1px solid #333;
+color:white;
+border-radius:5px;
+font-size:16px;
+box-sizing:border-box;
+}
+
+#contact-form textarea{
+height:150px;
+resize:none;
+}
+
+#contact-form button{
+padding:15px;
+background:#ff7200;
+border:0;
+border-radius:5px;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+}
+
+#contact-form button:hover{
+background:#ff8c32;
+}
+
+#form-status{
+color:#ff7200;
+font-weight:bold;
+}
+</style>
+
+<script>
+const form=document.getElementById("contact-form");
+const status=document.getElementById("form-status");
+
+form.addEventListener("submit",async function(event){
+event.preventDefault();
+
+const data=new FormData(form);
+
+const response=await fetch(form.action,{
+method:"POST",
+body:data,
+headers:{
+"Accept":"application/json"
+}
+});
+
+if(response.ok){
+status.innerHTML="Նամակը հաջողությամբ ուղարկվեց ✅";
+form.reset();
+}else{
+status.innerHTML="Չհաջողվեց ուղարկել նամակը ❌";
+}
+});
+</script>
 
 </div>
 </section>
