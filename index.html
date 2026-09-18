@@ -500,10 +500,12 @@ AIM<span>RELAX</span>-PUBG
 
 
 <!-- HOME -->
+    <script>function updateArmeniaTime() { const now = new Date(); const time = new Intl.DateTimeFormat('hy-AM', { timeZone: 'Asia/Yerevan', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(now); const date = new Intl.DateTimeFormat('hy-AM', { timeZone: 'Asia/Yerevan', day: 'numeric', month: 'long', year: 'numeric' }).format(now); document.getElementById('arm-time').textContent = time; document.getElementById('arm-date').textContent = date; } async function updateWeather() { try { const url = 'https://api.open-meteo.com/v1/forecast?latitude=40.1872&longitude=44.5152&current=temperature_2m,weather_code&timezone=Asia%2FYerevan'; const response = await fetch(url); const data = await response.json(); const temp = Math.round(data.current.temperature_2m); const code = data.current.weather_code; let weather = '☀️ Պարզ'; if (code === 1 || code === 2) weather = '🌤️ Մասամբ ամպամած'; else if (code === 3) weather = '☁️ Ամպամած'; else if (code >= 51 && code <= 67) weather = '🌧️ Անձրև'; else if (code >= 71 && code <= 77) weather = '❄️ Ձյուն'; else if (code >= 80 && code <= 82) weather = '🌦️ Անձրևային'; else if (code >= 95) weather = '⛈️ Ամպրոպ'; document.getElementById('arm-weather').textContent = weather + ' ' + temp + '°C'; } catch (error) { document.getElementById('arm-weather').textContent = 'Եղանակը հասանելի չէ'; } } updateArmeniaTime(); updateWeather(); setInterval(updateArmeniaTime, 1000); setInterval(updateWeather, 600000);</script>
 
 <section class="hero" id="home">
 
 <div class="hero-content">
+    <div id="armenia-info">🇦🇲 Հայաստան | <span id="arm-time">--:--</span> | <span id="arm-date">--</span> | <span id="arm-weather">Եղանակը բեռնվում է...</span></div>
 
 <div class="badge">PUBG MOBILE CLAN</div>
 
@@ -708,6 +710,7 @@ display:flex;
 flex-direction:column;
 gap:15px;
 }
+    #armenia-info { text-align: center; color: #ff7a00; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
 
 #contact-form input,
 #contact-form textarea{
