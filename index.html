@@ -1056,6 +1056,820 @@ if(new URLSearchParams(window.location.search).get("email_confirmed")==="1"){
 }
 refreshUser();
 </script>
+   <title>AIMRELAX-PUBG | Chat</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #080808;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.chat-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 15px;
+}
+
+.chat-header {
+  background: #111;
+  border: 1px solid #292929;
+  border-radius: 15px 15px 0 0;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-title {
+  color: #ff7a00;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.online {
+  color: #35e879;
+  font-size: 14px;
+}
+
+#messages {
+  height: 500px;
+  overflow-y: auto;
+  background: #0d0d0d;
+  padding: 15px;
+  border-left: 1px solid #292929;
+  border-right: 1px solid #292929;
+}
+
+.message {
+  margin-bottom: 12px;
+  padding: 10px 13px;
+  background: #161616;
+  border-radius: 10px;
+}
+
+.message-name {
+  color: #ff7a00;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.message-text {
+  color: #eee;
+  word-break: break-word;
+}
+
+.message-time {
+  color: #777;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+  background: #111;
+  padding: 15px;
+  border-radius: 0 0 15px 15px;
+  border: 1px solid #292929;
+}
+
+#messageInput {
+  flex: 1;
+  padding: 13px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+  font-size: 15px;
+}
+
+#sendBtn {
+  border: none;
+  background: #ff7a00;
+  color: white;
+  padding: 0 22px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#sendBtn:hover {
+  background: #ff941f;
+}
+
+.auth-box {
+  max-width: 450px;
+  margin: 80px auto;
+  background: #111;
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid #292929;
+}
+
+.auth-box h2 {
+  text-align: center;
+  color: #ff7a00;
+}
+
+.auth-box input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+  outline: none;
+}
+
+.auth-box button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #ff7a00;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 15px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+#authMessage {
+  text-align: center;
+  margin-top: 12px;
+  color: #ff7a00;
+}
+
+#logoutBtn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #aaa;
+  padding: 7px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+@media(max-width:600px) {
+
+  .chat-container {
+    margin: 10px;
+    padding: 0;
+  }
+
+  #messages {
+    height: 65vh;
+  }
+
+  .chat-input {
+    padding: 10px;
+  }
+
+  #sendBtn {
+    padding: 0 15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN / REGISTER -->
+
+<div id="authScreen" class="auth-box">
+
+  <h2 id="authTitle">AIMRELAX-PUBG</h2>
+
+  <input
+    type="text"
+    id="nickname"
+    placeholder="PUBG Nickname"
+  >
+
+  <input
+    type="email"
+    id="email"
+    placeholder="Email"
+  >
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Password"
+  >
+
+  <button id="authBtn">
+    ԳՐԱՆՑՎԵԼ
+  </button>
+
+  <div
+    class="auth-switch"
+    id="switchAuth"
+  >
+    Արդեն ունե՞ս հաշիվ։ Մուտք
+  </div>
+
+  <div id="authMessage"></div>
+
+</div>
+
+
+<!-- CHAT -->
+
+<div
+  id="chatScreen"
+  class="chat-container"
+  style="display:none;"
+>
+
+  <div class="chat-header">
+
+    <div>
+      <div class="chat-title">
+        🎮 AIMRELAX CHAT
+      </div>
+
+      <div class="online">
+        🟢 Online:
+        <span id="onlineCount">0</span>
+      </div>
+    </div>
+
+    <button id="logoutBtn">
+      Ելք
+    </button>
+
+  </div>
+
+
+  <div id="messages"></div>
+
+
+  <div class="chat-input">
+
+    <input
+      type="text"
+      id="messageInput"
+      placeholder="Գրիր հաղորդագրություն..."
+      maxlength="500"
+    >
+
+    <button id="sendBtn">
+      SEND
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://hvhlrbfjloiahbqmnrly.supabase.co";
+  const SUPABASE_KEY =
+"sb_publishable_EcZUkLdUCVv3qWDD7jlvhg_OjTYu1jA";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+let currentUser = null;
+let currentNickname = "";
+let chatChannel = null;
+let registerMode = true;
+
+
+/* AUTH MODE */
+
+document
+.getElementById("switchAuth")
+.addEventListener("click", function(){
+
+  registerMode = !registerMode;
+
+  if(registerMode){
+
+    document.getElementById("authTitle")
+      .textContent = "AIMRELAX-PUBG";
+
+    document.getElementById("authBtn")
+      .textContent = "ԳՐԱՆՑՎԵԼ";
+
+    document.getElementById("nickname")
+      .style.display = "block";
+
+    this.textContent =
+      "Արդեն ունե՞ս հաշիվ։ Մուտք";
+
+  } else {
+
+    document.getElementById("authTitle")
+      .textContent = "ՄՈՒՏՔ";
+
+    document.getElementById("authBtn")
+      .textContent = "ՄՈՒՏՔ";
+
+    document.getElementById("nickname")
+      .style.display = "none";
+
+    this.textContent =
+      "Նոր օգտատե՞ր ես։ Գրանցվել";
+
+  }
+
+});
+
+
+/* REGISTER / LOGIN */
+
+document
+.getElementById("authBtn")
+.addEventListener("click", async function(){
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const nickname =
+    document.getElementById("nickname").value.trim();
+
+  const authMessage =
+    document.getElementById("authMessage");
+
+
+  if(!email || !password){
+
+    authMessage.textContent =
+      "Լրացրու Email-ը և Password-ը";
+
+    return;
+  }
+
+
+  if(registerMode){
+
+    if(!nickname){
+
+      authMessage.textContent =
+        "Գրիր PUBG Nickname-ը";
+
+      return;
+    }
+
+
+    const { data, error } =
+      await supabaseClient.auth.signUp({
+
+        email: email,
+
+        password: password,
+
+        options: {
+
+          data: {
+            nickname: nickname
+          }
+
+        }
+
+      });
+
+
+    if(error){
+
+      authMessage.textContent =
+        error.message;
+
+      return;
+
+    }
+
+
+    authMessage.textContent =
+      "Գրանցումը կատարված է։ Ստուգիր Email-ը։";
+
+  } else {
+
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+
+        email: email,
+
+        password: password
+
+      });
+
+
+    if(error){
+
+      authMessage.textContent =
+        error.message;
+
+      return;
+
+    }
+
+
+    await startChat(data.user);
+
+  }
+
+});
+
+
+/* CHECK EXISTING SESSION */
+
+async function checkSession(){
+
+  const {
+    data: { session }
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if(session){
+
+    await startChat(session.user);
+
+  }
+
+}
+
+
+checkSession();
+
+
+/* START CHAT */
+
+async function startChat(user){
+
+  currentUser = user;
+
+  currentNickname =
+    user.user_metadata?.nickname ||
+    user.email.split("@")[0];
+
+
+  document
+    .getElementById("authScreen")
+    .style.display = "none";
+
+
+  document
+    .getElementById("chatScreen")
+    .style.display = "block";
+
+
+  await loadMessages();
+
+  startRealtime();
+
+}
+
+
+/* LOAD OLD MESSAGES */
+
+async function loadMessages(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("messages")
+    .select("*")
+    .order("created_at", {
+      ascending: true
+    })
+    .limit(100);
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+
+  const messages =
+    document.getElementById("messages");
+
+  messages.innerHTML = "";
+
+
+  data.forEach(function(message){
+
+    displayMessage(message);
+
+  });
+
+
+  scrollMessages();
+
+}
+
+
+/* SHOW MESSAGE */
+
+function displayMessage(message){
+
+  const messages =
+    document.getElementById("messages");
+
+
+  const div =
+    document.createElement("div");
+
+  div.className = "message";
+
+
+  const date =
+    new Date(message.created_at);
+
+
+  div.innerHTML = 
+
+    <div class="message-name">
+      ${escapeHtml(message.nickname)}
+    </div>
+
+    <div class="message-text">
+      ${escapeHtml(message.message)}
+    </div>
+
+    <div class="message-time">
+      ${date.toLocaleTimeString("hy-AM", {
+        hour: "2-digit",
+        minute: "2-digit"
+      })}
+    </div>
+
+  ;
+
+
+  messages.appendChild(div);
+
+}
+
+
+/* SEND MESSAGE */
+
+async function sendMessage(){
+  const input =
+    document.getElementById("messageInput");
+
+  const text =
+    input.value.trim();
+
+
+  if(!text || !currentUser)
+    return;
+
+
+  input.disabled = true;
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("messages")
+    .insert({
+
+      user_id: currentUser.id,
+
+      nickname: currentNickname,
+
+      message: text
+
+    });
+
+
+  input.disabled = false;
+
+
+  if(error){
+
+    console.error(error);
+
+    alert("Հաղորդագրությունը չուղարկվեց");
+
+    return;
+
+  }
+
+
+  input.value = "";
+
+  input.focus();
+
+}
+
+
+document
+.getElementById("sendBtn")
+.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+document
+.getElementById("messageInput")
+.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Enter"){
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
+
+
+/* REALTIME */
+
+function startRealtime(){
+
+  if(chatChannel){
+
+    supabaseClient
+      .removeChannel(chatChannel);
+
+  }
+
+
+  chatChannel =
+    supabaseClient
+      .channel("aimrelax-chat");
+
+
+  chatChannel
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "messages"
+      },
+      function(payload){
+
+        displayMessage(payload.new);
+
+        scrollMessages();
+
+      }
+    )
+    .subscribe();
+
+}
+
+
+/* ONLINE USERS */
+
+async function startPresence(){
+
+  const channel =
+    supabaseClient
+      .channel("aimrelax-online");
+
+
+  channel
+    .on(
+      "presence",
+      {
+        event: "sync"
+      },
+      function(){
+
+        const state =
+          channel.presenceState();
+
+
+        const users =
+          Object.keys(state).length;
+
+
+        document
+          .getElementById("onlineCount")
+          .textContent = users;
+
+      }
+    )
+    .subscribe(async function(status){
+
+      if(status === "SUBSCRIBED"){
+
+        await channel.track({
+
+          user_id: currentUser.id,
+
+          nickname: currentNickname,
+
+          online_at:
+            new Date().toISOString()
+
+        });
+
+      }
+
+    });
+
+}
+
+
+function scrollMessages(){
+
+  const messages =
+    document.getElementById("messages");
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+}
+
+
+/* LOGOUT */
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+  "click",
+  async function(){
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+  }
+);
+
+
+/* SECURITY */
+
+function escapeHtml(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+
+}
+
+
+/* AUTH STATE */
+
+supabaseClient.auth
+.onAuthStateChange(
+  async function(event, session){
+
+    if(event === "SIGNED_IN" && session){
+
+      await startChat(session.user);
+
+    }
+
+    if(event === "SIGNED_OUT"){
+
+      location.reload();
+
+    }
+
+  }
+);
+
+</script>
+ 
 
 </body>
 </html>
