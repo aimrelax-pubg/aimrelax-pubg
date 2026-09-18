@@ -694,7 +694,7 @@ AIM<span>RELAX</span>-PUBG
 
 <textarea name="message" placeholder="Ձեր նամակը" required></textarea>
 
-<button type="submit"ՈՒՂԱՐԿԵԼ ՆԱՄԱԿԸ</button>
+<button type="submit"SEND</button>
 
 <p id="form-status"></p>
 
@@ -782,7 +782,7 @@ status.innerHTML="Չհաջողվեց ուղարկել նամակը ❌";
 
 </footer>
 
-document.querySelectorAll('input, textarea').forEach(function(field) { field.addEventListener('invalid', function() { if (field.validity.valueMissing) { if (field.name === 'nickname') { field.setCustomValidity('Խնդրում ենք գրել ձեր PUBG անունը'); } else if (field.name === 'email') { field.setCustomValidity('Խնդրում ենք գրել ձեր էլ․ փոստը'); } else if (field.name === 'message') { field.setCustomValidity('Խնդրում ենք գրել ձեր հաղորդագրությունը'); } else { field.setCustomValidity('Խնդրում ենք լրացնել այս դաշտը'); } } else if (field.validity.typeMismatch) { field.setCustomValidity('Խնդրում ենք գրել ճիշտ էլ․ փոստի հասցե'); } }); field.addEventListener('input', function() { field.setCustomValidity(''); }); });
+
 </body>
 </html>
   
